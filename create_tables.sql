@@ -275,3 +275,65 @@ CREATE TABLE STATE_CODES(
 STATE_CD VARCHAR (255),
 SHORT_DESC VARCHAR (255)
 );
+
+--SELECT INTO new table for monthly member costs
+-- Step 1: Estimate member-months from beneficiary file
+WITH member_months AS (
+  SELECT 
+    DESYNPUF_ID,
+    CASE 
+      WHEN BENE_DEATH_DT IS NOT NULL 
+           AND DATE_PART('year',BENE_DEATH_DT) = 2010
+           THEN DATE_PART('month',BENE_DEATH_DT)
+      ELSE 12
+    END AS months_enrolled
+  FROM beneficiary_summary_10), 
+
+-- Step 2: Standardize inpatient claims
+inpatient_costs AS (
+  SELECT 
+    DESYNPUF_ID,
+    DATE_TRUNC('month', CLM_FROM_DT) AS claim_month,
+    CLM_PMT_AMT AS allowed_amount,
+    'Inpatient' AS claim_type
+  FROM inpatient_claims
+  WHERE CLM_FROM_DT BETWEEN '2010-01-01' AND '2010-12-31'), 
+
+-- Step 3: Standardize outpatient claims
+outpatient_costs AS (
+  SELECT 
+    DESYNPUF_ID,
+    DATE_TRUNC('month', CLM_FROM_DT) AS claim_month,
+    CLM_PMT_AMT AS allowed_amount,
+    'Outpatient' AS claim_type
+  FROM outpatient_claims
+  WHERE CLM_FROM_DT BETWEEN '2010-01-01' AND '2010-12-31'), 
+
+-- Step 5: Combine all claims
+all_claims AS (
+  SELECT * FROM inpatient_costs
+  UNION ALL
+  SELECT * FROM outpatient_costs), 
+
+-- Step 6: Aggregate by member and month
+monthly_costs AS (
+  SELECT 
+    DESYNPUF_ID AS member_id,
+    claim_month,
+    claim_type,
+    SUM(allowed_amount) AS total_monthly_cost
+  FROM all_claims
+  GROUP BY DESYNPUF_ID, claim_month, claim_type) 
+
+-- Step 7: Join with member-months to compute PMPM
+SELECT
+  mc.member_id,
+  mc.claim_month,
+  mc.claim_type,
+  mc.total_monthly_cost,
+  mm.months_enrolled
+INTO monthly_member_cost
+FROM monthly_costs mc
+JOIN member_months mm ON mc.member_id = mm.DESYNPUF_ID
+--LIMIT 10
+;
