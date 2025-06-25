@@ -120,3 +120,77 @@ ROUND(SUM(total_monthly_cost) / SUM(months_enrolled)) as PMPM
 FROM monthly_member_cost
 GROUP BY 1,2
 ORDER BY 1 ASC, 2 ASC;
+
+----------------------------------
+--PROCEDURES
+
+SELECT
+a.icd9_prcdr_cd_1
+,c.short_desc
+--,COUNT(DISTINCT a.clm_id) as inpatient_claim_ct
+,ROUND(SUM(clm_pmt_amt))
+FROM outpatient_claims a
+LEFT JOIN prcdr_codes c ON a.icd9_prcdr_cd_1 = c.prcdr_cd
+WHERE a.clm_from_dt >= '2010-01-01'
+AND a.icd9_prcdr_cd_1 IS NOT NULL
+GROUP BY 1,2
+ORDER BY 3 DESC
+LIMIT 10;
+
+--Top 10 Inpatient Procedures by Cost
+--"Total knee replacement"		$4,783,100
+--"PTCA"						$3,817,000
+--"Cont inv mec ven 96+ hrs"	$3,014,000
+--"Packed cell transfusion"		$2,832,000
+--"Venous cath NEC"				$2,303,700
+--"Hemodialysis"				$2,112,000
+--"Total hip replacement"		$1,710,000
+--"Cont inv mec ven <96 hrs"	$1,676,000
+--"Lumb/lmbsac fus ant/post"	$1,608,000
+--"Left heart cardiac cath"		$1,485,800
+
+--Top 10 Outpatient Procedures by Cost
+--"Spinal canal explor NEC"		$3,000
+--"Hemodialysis"				$1,680
+--"Closed bronchial biopsy"		$1,260
+--"Egd with closed biopsy"		$1,200
+--"Percutan aspiration gb"		$1,100
+--"Temporary tracheostomy"		$900
+--"Endo polpectomy lrge int"	$700
+--"Venous cath NEC"				$520
+--"Left heart cardiac cath"		$500
+--"Cl reduc disloc-shoulder"	$500
+
+----------------------------------------
+--How much of total costs are driven by the top 5% of members
+
+WITH ranked_members AS (
+  SELECT
+    member_id,
+	claim_type,
+    total_monthly_cost,
+    NTILE(20) OVER (ORDER BY total_monthly_cost DESC) AS cost_percentile
+  FROM monthly_member_cost
+  WHERE total_monthly_cost > 0
+),
+
+final_agg AS (
+  SELECT
+  	claim_type,
+    SUM(CASE WHEN cost_percentile = 1 THEN total_monthly_cost ELSE 0 END) AS top_5_cost,
+    SUM(total_monthly_cost) AS total_cost_all
+  FROM ranked_members
+  GROUP BY 1
+)
+
+SELECT 
+  claim_type,
+  top_5_cost,
+  total_cost_all,
+  ROUND(100.0 * top_5_cost / total_cost_all, 2) AS pct_of_total_cost_from_top_5
+FROM final_agg
+;
+
+--Percent of Total Medicare Costs Driven by the Top 5% of Members
+--Outpatient: 2% of $47,927,270
+--Inpatient: 83% of $132,675,010
