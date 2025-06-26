@@ -10,7 +10,7 @@ Tools Used: - SQL (PostgreSQL) - Tableau Public - Excel / CSV (intermediate form
 
 Key Metrics Analyzed: - PMPM (Per Member Per Month) cost - Top diagnosis codes by cost - Cost distribution across claim types - High-cost member identification
 
-Deliverables: - Interactive Tableau dashboard (public link) - SQL code for data wrangling and analysis - 1-page executive summary (PDF/Markdown) - Optional: Python scripts for extra modeling or visualizations
+Deliverables: - Interactive Tableau dashboard (public link) - SQL code for data wrangling and analysis - 1-page executive summary (PDF)
 
 Outcome: This project demonstrates proficiency in healthcare analytics, data modeling, KPI development, and storytelling through data. It is designed for use in applications to healthcare-focused data roles
 
