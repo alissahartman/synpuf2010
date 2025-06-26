@@ -263,13 +263,13 @@ HCPCS_CD_45	VARCHAR (255)	);
 
 CREATE TABLE DGNS_CODES(
 DGNS_CD VARCHAR (255),
-LONG_DESC VARCHAR (2000),
 SHORT_DESC VARCHAR (255)
 );
 
-ALTER TABLE dgns_codes
-DROP COLUMN long_desc;
--- long description had too many weird characters in it, causing errors during import
+CREATE TABLE PRCDR_CODES(
+PRCDR_CD VARCHAR (255),
+SHORT_DESC VARCHAR (255)
+);
 
 CREATE TABLE STATE_CODES(
 STATE_CD VARCHAR (255),
@@ -335,5 +335,4 @@ SELECT
 INTO monthly_member_cost
 FROM monthly_costs mc
 JOIN member_months mm ON mc.member_id = mm.DESYNPUF_ID
---LIMIT 10
 ;
