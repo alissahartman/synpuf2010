@@ -7,6 +7,7 @@
 **Overview:** This project analyzes synthetic Medicare claims data (SynPUF) provided by CMS. The goal is to surface key healthcare utilization trends, identify high-cost patient segments, and suggest actionable insights using real-world healthcare KPIs.
 
 **Data Source:** CMS DE-SynPUF 2008–2010 (Synthetic Public Use Files) - Includes inpatient, outpatient, and beneficiary summary data - ~2.3 million synthetic members, ~112 million claims
+
 [Link to Data](https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-claims-synthetic-public-use-files/cms-2008-2010-data-entrepreneurs-synthetic-public-use-file-de-synpuf)
 
 **Tools Used:** - SQL (PostgreSQL) - Tableau Public - Excel / CSV (intermediate format)
