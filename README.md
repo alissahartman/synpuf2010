@@ -14,8 +14,6 @@ Deliverables: - Interactive Tableau dashboard (public link) - SQL code for data 
 
 Outcome: This project demonstrates proficiency in healthcare analytics, data modeling, KPI development, and storytelling through data. It is designed for use in applications to healthcare-focused data roles
 
-![image](https://github.com/user-attachments/assets/53dc69af-a3f1-4cca-bed0-9ed9b6b60d37)
-
 
 
 Contact: Alissa Hartman (hartman.alissa@gmail.com)
