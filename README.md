@@ -1,7 +1,7 @@
 # synpuf2010
 **Insights from synthetic Medicare claims data**
 
-**Tableau Dashboard:** sites.google.com/view/amhartman/portfolio
+[Tableau Dashboard](https://public.tableau.com/views/MedicareClaims_17509752302870/SynPUF?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 
 **Overview:** This project analyzes synthetic Medicare claims data (SynPUF) provided by CMS. The goal is to surface key healthcare utilization trends, identify high-cost patient segments, and suggest actionable insights using real-world healthcare KPIs.
