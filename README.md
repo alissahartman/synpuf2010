@@ -1,16 +1,21 @@
 # synpuf2010
 Insights from synthetic Medicare claims data
 
+
 Overview: This project analyzes synthetic Medicare claims data (SynPUF) provided by CMS. The goal is to surface key healthcare utilization trends, identify high-cost patient segments, and suggest actionable insights using real-world healthcare KPIs.
 
-Data Source: CMS DE-SynPUF 2008–2010 (Synthetic Public Use Files) - Includes inpatient, outpatient, and beneficiary summary data - ~2.3 million synthetic members, ~112 million claims
+Data Source: CMS DE-SynPUF 2008–2010 (Synthetic Public Use Files) - Includes inpatient, outpatient, carrier, and beneficiary summary data - ~2.3 million synthetic members, ~112 million claims
 
-Tools Used: - PostgreSQL- Tableau Public - Excel / CSV (intermediate format)
+Tools Used: - SQL (PostgreSQL) - Tableau Public - Excel / CSV (intermediate format)
 
-Key Metrics Analyzed: - PMPM (Per Member Per Month) cost - Top diagnosis codes by cost - ER visits per 1,000 members - High-cost member identification - Inpatient vs outpatient utilization
+Key Metrics Analyzed: - PMPM (Per Member Per Month) cost - Top diagnosis codes by cost - Cost distribution across claim types - High-cost member identification
 
-Deliverables: - Interactive Tableau dashboard (public link) - SQL code for data wrangling and analysis - 1-page executive summary (PDF/Markdown)
+Deliverables: - Interactive Tableau dashboard (public link) - SQL code for data wrangling and analysis - 1-page executive summary (PDF/Markdown) - Optional: Python scripts for extra modeling or visualizations
 
-Outcome: This project demonstrates proficiency in healthcare analytics, data modeling, KPI development, and storytelling through data. It is designed for use in applications to healthcare-focused data roles.
+Outcome: This project demonstrates proficiency in healthcare analytics, data modeling, KPI development, and storytelling through data. It is designed for use in applications to healthcare-focused data roles
+
+![image](https://github.com/user-attachments/assets/53dc69af-a3f1-4cca-bed0-9ed9b6b60d37)
+
+
 
 Contact: Alissa Hartman (hartman.alissa@gmail.com)
