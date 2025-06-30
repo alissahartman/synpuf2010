@@ -326,6 +326,7 @@ monthly_costs AS (
   GROUP BY DESYNPUF_ID, claim_month, claim_type) 
 
 -- Step 7: Join with member-months to compute PMPM
+WITH ip AS(
 SELECT
   mc.member_id,
   mc.claim_month,
@@ -335,4 +336,67 @@ SELECT
 INTO monthly_member_cost
 FROM monthly_costs mc
 JOIN member_months mm ON mc.member_id = mm.DESYNPUF_ID
+;
+
+
+--Create combined claims table for Tableau export
+--10,000 row limit
+
+WITH ip AS(
+SELECT
+a.desynpuf_id
+,clm_id
+,'Inpatient' as claim_type
+,clm_from_dt
+,clm_thru_dt
+,prvdr_num
+,c.short_desc as state
+,icd9_dgns_cd_1
+,icd9_dgns_cd_2
+,icd9_prcdr_cd_1
+,icd9_prcdr_cd_2
+,clm_pmt_amt
+FROM inpatient_claims a
+LEFT JOIN beneficiary_summary_10 b ON a.desynpuf_id = b.desynpuf_id
+LEFT JOIN state_codes c ON b.sp_state_code = c.state_cd
+WHERE clm_pmt_amt > 0
+AND clm_from_dt >= '2010-01-01'
+AND bene_hi_cvrage_tot_mons = 12
+AND bene_smi_cvrage_tot_mons = 12
+AND c.short_desc IS NOT NULL
+AND c.short_desc != 'Others'
+order by random()
+LIMIT 5000
+),
+
+op AS (
+SELECT
+a.desynpuf_id
+,clm_id
+,'Outpatient' as claim_type
+,clm_from_dt
+,clm_thru_dt
+,prvdr_num
+,c.short_desc as state
+,icd9_dgns_cd_1
+,icd9_dgns_cd_2
+,icd9_prcdr_cd_1
+,icd9_prcdr_cd_2
+,clm_pmt_amt
+FROM outpatient_claims a
+LEFT JOIN beneficiary_summary_10 b ON a.desynpuf_id = b.desynpuf_id
+LEFT JOIN state_codes c ON b.sp_state_code = c.state_cd
+WHERE clm_pmt_amt > 0
+AND clm_from_dt >= '2010-01-01'
+AND bene_hi_cvrage_tot_mons = 12
+AND bene_smi_cvrage_tot_mons = 12
+AND c.short_desc IS NOT NULL
+AND c.short_desc != 'Others'
+order by random()
+LIMIT 5000
+)
+
+SELECT * FROM ip
+UNION ALL
+SELECT * FROM op
 ;
