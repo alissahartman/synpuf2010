@@ -1,23 +1,40 @@
-# synpuf2010
-**Insights from synthetic Medicare claims data**
+# 📊 Cost and Utilization Patterns in a Synthetic Medicare Population
 
-[Tableau Dashboard](https://public.tableau.com/views/MedicareClaims_17509752302870/MedicareClaims?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+## Overview  
+This project analyzes 2008 synthetic Medicare claims data (SynPUF) from the Centers for Medicare & Medicaid Services (CMS) to explore trends in healthcare utilization and cost. The focus is on inpatient and outpatient services, with industry-standard KPIs used to reveal high-cost segments and population-level insights.
 
+## Objectives  
+- Quantify cost and utilization with per-member metrics  
+- Identify high-cost members and analyze cost concentration  
+- Compare claim types (inpatient vs. outpatient)  
+- Create a Tableau dashboard for exploratory analysis  
 
-**Overview:** This project analyzes synthetic Medicare claims data (SynPUF) provided by CMS. The goal is to surface key healthcare utilization trends, identify high-cost patient segments, and suggest actionable insights using real-world healthcare KPIs.
+## Tools  
+- **SQL** (PostgreSQL)  
+- **Tableau Public**  
+- **CMS DE-SynPUF 2008 Dataset**  
 
-**Data Source:** CMS DE-SynPUF 2008–2010 (Synthetic Public Use Files) - Includes inpatient, outpatient, and beneficiary summary data - ~2.3 million synthetic members, ~112 million claims
+## Key Metrics  
+- PMPM (Per Member Per Month)  
+- Claims per 1,000 members  
+- Top diagnosis codes by cost  
+- % of total cost driven by top 5% of members  
 
-[Link to Data](https://www.cms.gov/data-research/statistics-trends-and-reports/medicare-claims-synthetic-public-use-files/cms-2008-2010-data-entrepreneurs-synthetic-public-use-file-de-synpuf)
+## Key Findings  
+- The top 5% of members drove a disproportionate share of total claims cost  
+- Inpatient claims had higher per-claim cost but were less frequent  
+- High-cost diagnoses were consistent with known chronic disease patterns in Medicare populations  
 
-**Tools Used:** - SQL (PostgreSQL) - Tableau Public - Excel / CSV (intermediate format)
+## Dashboard  
+🔗 [View Tableau Public Dashboard](https://public.tableau.com/views/MedicareClaims_17509752302870/MedicareClaims?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
-**Key Metrics Analyzed:** - PMPM (Per Member Per Month) cost - Top diagnosis codes by cost - Cost distribution across claim types - High-cost member identification
+## Project Structure  
+```
+📁 sql/                -- All SQL queries used for extraction and transformation  
+📁 data/               -- Cleaned datasets (if shared)  
+📁 images/             -- Screenshots of key visualizations  
+📄 README.md           -- Project summary (this file)  
+```
 
-**Deliverables:** - Interactive Tableau dashboard (public link) - SQL code for data wrangling and analysis - 1-page executive summary (PDF)
-
-**Outcome:** This project demonstrates proficiency in healthcare analytics, data modeling, KPI development, and storytelling through data. It is designed for use in applications to healthcare-focused data roles
-
-
-
-Contact: Alissa Hartman (hartman.alissa@gmail.com)
+## Outcome  
+This project demonstrates core healthcare analytics skills: data modeling, SQL-based KPI design, cost utilization analysis, and dashboard storytelling. It was designed to reflect tasks relevant to analyst roles at organizations like Centene, UnitedHealth, or healthtech startups.
