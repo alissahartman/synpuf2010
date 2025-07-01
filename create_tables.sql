@@ -341,6 +341,7 @@ JOIN member_months mm ON mc.member_id = mm.DESYNPUF_ID
 
 --Create combined claims table for Tableau export
 --10,000 row limit
+--only claims with dx & sx info
 
 WITH ip AS(
 SELECT
@@ -351,20 +352,29 @@ a.desynpuf_id
 ,clm_thru_dt
 ,prvdr_num
 ,c.short_desc as state
-,icd9_dgns_cd_1
-,icd9_dgns_cd_2
-,icd9_prcdr_cd_1
-,icd9_prcdr_cd_2
+,a.icd9_dgns_cd_1
+,d.short_desc as diagnosis_1
+,a.icd9_dgns_cd_2
+,e.short_desc as diagnosis_2
+,a.icd9_prcdr_cd_1
+,f.short_desc as procedure_1
+,a.icd9_prcdr_cd_2
+,g.short_desc as procedure_2
 ,clm_pmt_amt
 FROM inpatient_claims a
 LEFT JOIN beneficiary_summary_10 b ON a.desynpuf_id = b.desynpuf_id
 LEFT JOIN state_codes c ON b.sp_state_code = c.state_cd
+LEFT JOIN dgns_codes d ON a.icd9_dgns_cd_1 = d.dgns_cd 
+LEFT JOIN dgns_codes e ON a.icd9_dgns_cd_2 = e.dgns_cd 
+LEFT JOIN prcdr_codes f ON a.icd9_prcdr_cd_1 = f.prcdr_cd 
+LEFT JOIN prcdr_codes g ON a.icd9_prcdr_cd_2 = g.prcdr_cd 
 WHERE clm_pmt_amt > 0
 AND clm_from_dt >= '2010-01-01'
 AND bene_hi_cvrage_tot_mons = 12
 AND bene_smi_cvrage_tot_mons = 12
 AND c.short_desc IS NOT NULL
 AND c.short_desc != 'Others'
+AND d.short_desc IS NOT NULL
 order by random()
 LIMIT 5000
 ),
@@ -378,20 +388,29 @@ a.desynpuf_id
 ,clm_thru_dt
 ,prvdr_num
 ,c.short_desc as state
-,icd9_dgns_cd_1
-,icd9_dgns_cd_2
-,icd9_prcdr_cd_1
-,icd9_prcdr_cd_2
+,a.icd9_dgns_cd_1
+,d.short_desc as diagnosis_1
+,a.icd9_dgns_cd_2
+,e.short_desc as diagnosis_2
+,a.icd9_prcdr_cd_1
+,f.short_desc as procedure_1
+,a.icd9_prcdr_cd_2
+,g.short_desc as procedure_2
 ,clm_pmt_amt
 FROM outpatient_claims a
 LEFT JOIN beneficiary_summary_10 b ON a.desynpuf_id = b.desynpuf_id
 LEFT JOIN state_codes c ON b.sp_state_code = c.state_cd
+LEFT JOIN dgns_codes d ON a.icd9_dgns_cd_1 = d.dgns_cd
+LEFT JOIN dgns_codes e ON a.icd9_dgns_cd_2 = e.dgns_cd
+LEFT JOIN prcdr_codes f ON a.icd9_prcdr_cd_1 = f.prcdr_cd
+LEFT JOIN prcdr_codes g ON a.icd9_prcdr_cd_2 = g.prcdr_cd
 WHERE clm_pmt_amt > 0
 AND clm_from_dt >= '2010-01-01'
 AND bene_hi_cvrage_tot_mons = 12
 AND bene_smi_cvrage_tot_mons = 12
 AND c.short_desc IS NOT NULL
 AND c.short_desc != 'Others'
+AND d.short_desc IS NOT NULL
 order by random()
 LIMIT 5000
 )
