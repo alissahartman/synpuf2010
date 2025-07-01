@@ -31,8 +31,7 @@ This project analyzes 2008 synthetic Medicare claims data (SynPUF) from the Cent
 ## Project Structure  
 ```
 📁 sql/                -- All SQL queries used for extraction and transformation  
-📁 data/               -- Cleaned datasets (if shared)  
-📁 images/             -- Screenshots of key visualizations  
+📁 data/               -- Cleaned datasets
 📄 README.md           -- Project summary (this file)  
 ```
 
