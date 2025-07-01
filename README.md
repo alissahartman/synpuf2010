@@ -31,7 +31,7 @@ This project analyzes 2008 synthetic Medicare claims data (SynPUF) from the Cent
 ## Project Structure  
 ```
 📁 sql/                -- All SQL queries used for extraction and transformation  
-📁 data/               -- Cleaned datasets
+📁 data/               -- Tableau dataset (limited to 10,000 rows)
 📄 README.md           -- Project summary (this file)  
 ```
 
